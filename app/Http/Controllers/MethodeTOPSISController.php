@@ -23,6 +23,10 @@ class MethodeTOPSISController extends Controller
         $kriteria = Kriteria::all();
         $altkrit = AlternatifKriteriaValue::all();
 
+        if ($altkrit->isEmpty()) {
+            return view('kosong.index');
+        }
+
         // Inisialisasi variable array untuk menyimpan nilai sum, results dan matrix ternormalisasi
         $sum = [];
         $results = [];
@@ -179,6 +183,10 @@ class MethodeTOPSISController extends Controller
         $alternatif = Alternatif::all();
         $kriteria = Kriteria::all();
         $altkrit = AlternatifKriteriaValue::all();
+
+        if ($altkrit->isEmpty()) {
+            return view('kosong.index');
+        }
 
         // Inisialisasi variable array untuk menyimpan nilai sum, results dan matrix ternormalisasi
         $sum = [];

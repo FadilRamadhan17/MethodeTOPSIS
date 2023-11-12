@@ -32,13 +32,18 @@ class DataController extends Controller
         $this->validate($request, [
             'kriteria' => 'required',
             'bobot' => 'required',
+            'attribut' => 'required'
         ]);
 
-
-        Kriteria::create([
+        $tambahkriteria = Kriteria::create([
             'kriteria' => $request->kriteria,
             'bobot' => $request->bobot,
+            'attribut' => $request->attribut,
         ]);
+
+        if ($tambahkriteria) {
+            AlternatifKriteriaValue::truncate();
+        }
 
         return redirect()->route('kriteria')->with(['success' => 'Data berhasil disimpan!']);
     }
@@ -55,6 +60,7 @@ class DataController extends Controller
         $this->validate($request, [
             'kriteria' => 'required',
             'bobot' => 'required',
+            'attribut' => 'required'
         ]);
 
         $kriteria = Kriteria::findOrFail($id);
@@ -62,7 +68,12 @@ class DataController extends Controller
         $kriteria->update([
             'kriteria' => $request->kriteria,
             'bobot' => $request->bobot,
+            'attribut' => $request->attribut,
         ]);
+
+        if ($kriteria) {
+            AlternatifKriteriaValue::truncate();
+        }
 
         return redirect()->route('kriteria')->with(['success' => 'Data Berhasil Diupdate!']);
     }
@@ -72,6 +83,10 @@ class DataController extends Controller
         $kriteria = Kriteria::findOrFail($id);
 
         $kriteria->delete();
+
+        if ($kriteria) {
+            AlternatifKriteriaValue::truncate();
+        }
 
         return redirect()->route('kriteria')->with(['success' => 'Data Berhasil di Hapus!']);
     }
@@ -96,11 +111,14 @@ class DataController extends Controller
             'keterangan' => 'required',
         ]);
 
-
-        Alternatif::create([
+        $tambahalternatif = Alternatif::create([
             'nama' => $request->nama,
             'keterangan' => $request->keterangan,
         ]);
+
+        if ($tambahalternatif) {
+            AlternatifKriteriaValue::truncate();
+        }
 
         return redirect()->route('alternatif')->with(['success' => 'Data berhasil disimpan!']);
     }
@@ -119,21 +137,29 @@ class DataController extends Controller
             'keterangan' => 'required',
         ]);
 
-        $kriteria = Alternatif::findOrFail($id);
+        $alternatif = Alternatif::findOrFail($id);
 
-        $kriteria->update([
+        $alternatif->update([
             'nama' => $request->nama,
             'keterangan' => $request->keterangan,
         ]);
+
+        if ($alternatif) {
+            AlternatifKriteriaValue::truncate();
+        }
 
         return redirect()->route('alternatif')->with(['success' => 'Data Berhasil Diupdate!']);
     }
 
     public function destroyalternatif(string $id)
     {
-        $kriteria = Alternatif::findOrFail($id);
+        $alternatif = Alternatif::findOrFail($id);
 
-        $kriteria->delete();
+        $alternatif->delete();
+
+        if ($alternatif) {
+            AlternatifKriteriaValue::truncate();
+        }
 
         return redirect()->route('alternatif')->with(['success' => 'Data Berhasil di Hapus!']);
     }
@@ -152,15 +178,11 @@ class DataController extends Controller
         $data = AlternatifKriteriaValue::all();
         $alternatif = Alternatif::all();
         $kriteria = Kriteria::all();
-        // $alternatifData = Alternatif::orderBy('id', 'DESC')->get();
-        // $kriteriaData = Kriteria::orderBy('id', 'DESC')->get();
         return view('data.data.create', compact('data', 'alternatif', 'kriteria'));
     }
 
     public function storedata(Request $request)
     {
-        // dd($request->all());
-
         $data = $request->input('data');
 
         foreach ($data as $idAlternatif => $kriteriaData) {
@@ -181,56 +203,6 @@ class DataController extends Controller
             }
         }
 
-        // $request->validate([
-        //     'kriteria_id' => 'required',
-        //     'alternatif_id' => 'required',
-        //     'value' => 'required',
-        // ]);
-
-        // AlternatifKriteriaValue::create([
-        //     'alternatif_id' => $request->alternatif_id,
-        //     'kriteria_id' => $request->kriteria_id,
-        //     'value' => $request->value,
-        // ]);
-
         return redirect()->route('data.value')->with(['success' => 'Data berhasil disimpan!']);
     }
-
-    // public function editdata(string $id)
-    // {
-    //     $alternatif = Alternatif::orderBy('id', 'DESC')->get();
-    //     $kriteria = Kriteria::orderBy('id', 'DESC')->get();
-    //     $data = AlternatifKriteriaValue::with('alternatif', 'kriteria')->get();
-
-    //     return view('data.data.edit', compact('kriteria', 'alternatif', 'data'));
-    // }
-
-    // public function updatedata(Request $request, string $id)
-    // {
-
-    //     $request->validate([
-    //         'kriteria_id' => 'required',
-    //         'alternatif_id' => 'required',
-    //         'value' => 'required',
-    //     ]);
-
-    //     $data = Alternatif::findOrFail($id);
-
-    //     $data->update([
-    //         'alternatif_id' => $request->alternatif_id,
-    //         'kriteria_id' => $request->kriteria_id,
-    //         'value' => $request->value,
-    //     ]);
-
-    //     return redirect()->route('data')->with(['success' => 'Data Berhasil Diupdate!']);
-    // }
-
-    // public function destroydata(string $id)
-    // {
-    //     $data = AlternatifKriteriaValue::findOrFail($id);
-
-    //     $data->delete();
-
-    //     return redirect()->route('data')->with(['success' => 'Data Berhasil di Hapus!']);
-    // }
 }

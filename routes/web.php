@@ -54,7 +54,6 @@ Route::middleware('auth')->group(function () {
 
 
     Route::get('/methodetopsis', [MethodeTOPSISController::class, 'methodetopsis'])->name('methodetopsis');
-    Route::get('/methodetopsis/generate', [MethodeTOPSISController::class, 'methodetopsis'])->name('methodetopsis.generate');
     Route::get('/hasil', [MethodeTOPSISController::class, 'hasil'])->name('hasil');
 });
 
