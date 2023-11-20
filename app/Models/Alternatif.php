@@ -13,7 +13,6 @@ class Alternatif extends Model
     protected $fillable = [
         'nama',
         'keterangan',
-        'data'
     ];
 
     public function kriteria()

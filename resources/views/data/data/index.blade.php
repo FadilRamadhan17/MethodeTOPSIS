@@ -17,7 +17,7 @@
                         Kriteria
                     </a>
                 </li>
-        
+
                 <li class="flex-auto text-center">
                     <a href="{{ route('alternatif') }}"
                         class="inline-flex items-center px-1 py-5 text-sm font-medium leading-5 text-gray-500 hover:text-gray-700 focus:outline-none focus:text-gray-700 focus:border-gray-300 transition duration-150 ease-in-out">
@@ -75,7 +75,6 @@
                                                 @if ($data->isNotEmpty())
                                                     {{ $data->where('alternatif_id', $a->id)->where('kriteria_id', $k->id)->first()->value }}
                                                 @else
-                                                    
                                                 @endif
                                             </td>
                                         @endforeach
