@@ -9,13 +9,6 @@ use Illuminate\Http\Request;
 
 class MethodeTOPSISController extends Controller
 {
-    public function index()
-    {
-        $data = AlternatifKriteriaValue::with('kriteria', 'alternatif')->get();
-
-        return view('menu.methodetopsis', compact('data'));
-    }
-
     public function methodetopsis()
     {
 
